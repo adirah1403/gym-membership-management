@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Members</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav2.css') }}">
+</head>
+<body>
+     <!-- Navbar -->
+     <nav class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">Gym Management</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('register_member') }}">Add New Member</a></li> 
+            <li><a href="{{ url_for('view_all_members') }}">View Members</a></li>
+            <li><a href="{{ url_for('search_members') }}">Search Members</a></li>
+            <li><a href="{{ url_for('update_member', member_id=1) }}">Update Member</a></li>
+            <li><a href="{{ url_for('delete_member', member_id=1) }}">Delete Member</a></li>
+        </ul>
+    </nav>
+    <div class="form-container">
+        <h2>Search Members</h2>
+        <form method="GET" action="{{ url_for('search_members') }}">
+            <input type="text" name="query" placeholder="Search by name" required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if members %}
+        <h3>Search Results:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Start Date</th>
+                    <th>Duration (Months)</th>
+                    <th>Total Bill (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                <tr>
+                    <td>{{ member[0] }}</td>
+                    <td>{{ member[1] }}</td>
+                    <td>{{ member[2] }}</td>
+                    <td>{{ member[3] }}</td>
+                    <td>{{ member[4] }}</td>
+                    <td>{{ member[5] }}</td>
+                    <td>{{ member[6] }}</td>
+                    <td>{{ member[7] }} months</td>
+                    <td>₹{{ member[8] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
